@@ -1,9 +1,8 @@
 import asyncio
-import json
-import warnings
-
 import graphql
+import json
 import pytest
+import warnings
 
 from gql import Client, gql
 
@@ -281,7 +280,8 @@ async def test_async_client_validation_fetch_schema_from_server_with_client_argu
     sample_transport = WebsocketsTransport(url=url)
 
     async with Client(
-        transport=sample_transport, fetch_schema_from_transport=True,
+        transport=sample_transport,
+        fetch_schema_from_transport=True,
     ) as session:
 
         query = gql(

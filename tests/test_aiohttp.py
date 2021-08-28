@@ -1,6 +1,5 @@
 import io
 import json
-
 import pytest
 
 from gql import Client, gql
@@ -42,6 +41,7 @@ pytestmark = pytest.mark.aiohttp
 @pytest.mark.asyncio
 async def test_aiohttp_query(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -55,7 +55,9 @@ async def test_aiohttp_query(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url, timeout=10)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -72,6 +74,7 @@ async def test_aiohttp_query(event_loop, aiohttp_server):
 @pytest.mark.asyncio
 async def test_aiohttp_cookies(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -88,7 +91,9 @@ async def test_aiohttp_cookies(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url, cookies={"cookie1": "val1"})
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -105,6 +110,7 @@ async def test_aiohttp_cookies(event_loop, aiohttp_server):
 @pytest.mark.asyncio
 async def test_aiohttp_error_code_401(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -123,7 +129,9 @@ async def test_aiohttp_error_code_401(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -136,6 +144,7 @@ async def test_aiohttp_error_code_401(event_loop, aiohttp_server):
 @pytest.mark.asyncio
 async def test_aiohttp_error_code_500(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -150,7 +159,9 @@ async def test_aiohttp_error_code_500(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -166,6 +177,7 @@ query1_server_error_answer = '{"errors": ["Error 1", "Error 2"]}'
 @pytest.mark.asyncio
 async def test_aiohttp_error_code(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -181,7 +193,9 @@ async def test_aiohttp_error_code(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -217,6 +231,7 @@ invalid_protocol_responses = [
 @pytest.mark.parametrize("param", invalid_protocol_responses)
 async def test_aiohttp_invalid_protocol(event_loop, aiohttp_server, param):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     response = param["response"]
@@ -232,7 +247,9 @@ async def test_aiohttp_invalid_protocol(event_loop, aiohttp_server, param):
 
     sample_transport = AIOHTTPTransport(url=url)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -245,6 +262,7 @@ async def test_aiohttp_invalid_protocol(event_loop, aiohttp_server, param):
 @pytest.mark.asyncio
 async def test_aiohttp_subscribe_not_supported(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -258,7 +276,9 @@ async def test_aiohttp_subscribe_not_supported(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -270,6 +290,7 @@ async def test_aiohttp_subscribe_not_supported(event_loop, aiohttp_server):
 @pytest.mark.asyncio
 async def test_aiohttp_cannot_connect_twice(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -283,7 +304,9 @@ async def test_aiohttp_cannot_connect_twice(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url, timeout=10)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         with pytest.raises(TransportAlreadyConnected):
             await session.transport.connect()
@@ -292,6 +315,7 @@ async def test_aiohttp_cannot_connect_twice(event_loop, aiohttp_server):
 @pytest.mark.asyncio
 async def test_aiohttp_cannot_execute_if_not_connected(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -314,6 +338,7 @@ async def test_aiohttp_cannot_execute_if_not_connected(event_loop, aiohttp_serve
 @pytest.mark.asyncio
 async def test_aiohttp_extra_args(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -333,7 +358,9 @@ async def test_aiohttp_extra_args(event_loop, aiohttp_server):
         url=url, timeout=10, client_session_args={"version": "1.1", "cookie_jar": jar}
     )
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 
@@ -361,6 +388,7 @@ query2_server_answer = '{"data": {"continent": {"name": "Europe"}}}'
 @pytest.mark.asyncio
 async def test_aiohttp_query_variable_values(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -374,7 +402,9 @@ async def test_aiohttp_query_variable_values(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url, timeout=10)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         params = {"code": "EU"}
 
@@ -395,6 +425,7 @@ async def test_aiohttp_execute_running_in_thread(
     event_loop, aiohttp_server, run_sync_test
 ):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -423,6 +454,7 @@ async def test_aiohttp_subscribe_running_in_thread(
     event_loop, aiohttp_server, run_sync_test
 ):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -509,6 +541,7 @@ async def single_upload_handler(request):
 @pytest.mark.asyncio
 async def test_aiohttp_file_upload(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     app = web.Application()
@@ -521,7 +554,9 @@ async def test_aiohttp_file_upload(event_loop, aiohttp_server):
 
     with TemporaryFile(file_1_content) as test_file:
 
-        async with Client(transport=sample_transport,) as session:
+        async with Client(
+            transport=sample_transport,
+        ) as session:
 
             query = gql(file_upload_mutation_1)
 
@@ -546,6 +581,7 @@ async def test_aiohttp_file_upload_without_session(
     event_loop, aiohttp_server, run_sync_test
 ):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     app = web.Application()
@@ -559,7 +595,9 @@ async def test_aiohttp_file_upload_without_session(
 
         with TemporaryFile(file_1_content) as test_file:
 
-            client = Client(transport=sample_transport,)
+            client = Client(
+                transport=sample_transport,
+            )
 
             query = gql(file_upload_mutation_1)
 
@@ -614,6 +652,7 @@ async def binary_upload_handler(request):
 @pytest.mark.asyncio
 async def test_aiohttp_binary_file_upload(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     app = web.Application()
@@ -626,7 +665,9 @@ async def test_aiohttp_binary_file_upload(event_loop, aiohttp_server):
 
     with TemporaryFile(binary_file_content) as test_file:
 
-        async with Client(transport=sample_transport,) as session:
+        async with Client(
+            transport=sample_transport,
+        ) as session:
 
             query = gql(file_upload_mutation_1)
 
@@ -648,7 +689,8 @@ async def test_aiohttp_binary_file_upload(event_loop, aiohttp_server):
 
 @pytest.mark.asyncio
 async def test_aiohttp_stream_reader_upload(event_loop, aiohttp_server):
-    from aiohttp import web, ClientSession
+    from aiohttp import ClientSession, web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def binary_data_handler(request):
@@ -687,6 +729,7 @@ async def test_aiohttp_stream_reader_upload(event_loop, aiohttp_server):
 async def test_aiohttp_async_generator_upload(event_loop, aiohttp_server):
     import aiofiles
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     app = web.Application()
@@ -699,7 +742,9 @@ async def test_aiohttp_async_generator_upload(event_loop, aiohttp_server):
 
     with TemporaryFile(binary_file_content) as test_file:
 
-        async with Client(transport=sample_transport,) as session:
+        async with Client(
+            transport=sample_transport,
+        ) as session:
 
             query = gql(file_upload_mutation_1)
 
@@ -749,6 +794,7 @@ This file will also be sent in the GraphQL mutation
 @pytest.mark.asyncio
 async def test_aiohttp_file_upload_two_files(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -793,7 +839,9 @@ async def test_aiohttp_file_upload_two_files(event_loop, aiohttp_server):
     with TemporaryFile(file_1_content) as test_file_1:
         with TemporaryFile(file_2_content) as test_file_2:
 
-            async with Client(transport=sample_transport,) as session:
+            async with Client(
+                transport=sample_transport,
+            ) as session:
 
                 query = gql(file_upload_mutation_2)
 
@@ -839,6 +887,7 @@ file_upload_mutation_3_map = '{"0": ["variables.files.0"], "1": ["variables.file
 @pytest.mark.asyncio
 async def test_aiohttp_file_upload_list_of_two_files(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -883,7 +932,9 @@ async def test_aiohttp_file_upload_list_of_two_files(event_loop, aiohttp_server)
     with TemporaryFile(file_1_content) as test_file_1:
         with TemporaryFile(file_2_content) as test_file_2:
 
-            async with Client(transport=sample_transport,) as session:
+            async with Client(
+                transport=sample_transport,
+            ) as session:
 
                 query = gql(file_upload_mutation_3)
 
@@ -1022,6 +1073,7 @@ query1_server_answer_with_extensions = (
 @pytest.mark.asyncio
 async def test_aiohttp_query_with_extensions(event_loop, aiohttp_server):
     from aiohttp import web
+
     from gql.transport.aiohttp import AIOHTTPTransport
 
     async def handler(request):
@@ -1037,7 +1089,9 @@ async def test_aiohttp_query_with_extensions(event_loop, aiohttp_server):
 
     sample_transport = AIOHTTPTransport(url=url, timeout=10)
 
-    async with Client(transport=sample_transport,) as session:
+    async with Client(
+        transport=sample_transport,
+    ) as session:
 
         query = gql(query1_str)
 

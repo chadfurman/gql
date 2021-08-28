@@ -183,7 +183,9 @@ hero {
     query_dsl = ds.Query.hero.select(
         ds.Character.id,
         ds.Character.name,
-        ds.Character.friends.select(ds.Character.name,),
+        ds.Character.friends.select(
+            ds.Character.name,
+        ),
     )
     assert query == str(query_dsl)
 
@@ -230,7 +232,9 @@ human(id: "1000") {
   name
 }
     """.strip()
-    query_dsl = ds.Query.human(id="1000").select(ds.Human.name,)
+    query_dsl = ds.Query.human(id="1000").select(
+        ds.Human.name,
+    )
 
     assert query == str(query_dsl)
 
@@ -241,7 +245,13 @@ luke: human(id: "1000") {
   name
 }
     """.strip()
-    query_dsl = ds.Query.human.args(id=1000).alias("luke").select(ds.Character.name,)
+    query_dsl = (
+        ds.Query.human.args(id=1000)
+        .alias("luke")
+        .select(
+            ds.Character.name,
+        )
+    )
     assert query == str(query_dsl)
 
 
@@ -262,7 +272,9 @@ human(id: "1000") {
   my_name: name
 }
     """.strip()
-    query_dsl = ds.Query.human.args(id=1000).select(my_name=ds.Character.name,)
+    query_dsl = ds.Query.human.args(id=1000).select(
+        my_name=ds.Character.name,
+    )
     assert query == str(query_dsl)
 
 
@@ -276,7 +288,9 @@ def test_hero_name_query_result(ds, client):
 def test_arg_serializer_list(ds, client):
     query = dsl_gql(
         DSLQuery(
-            ds.Query.characters.args(ids=[1000, 1001, 1003]).select(ds.Character.name,)
+            ds.Query.characters.args(ids=[1000, 1001, 1003]).select(
+                ds.Character.name,
+            )
         )
     )
     result = client.execute(query)
@@ -372,7 +386,11 @@ def test_root_fields_aliased(ds, client):
 
 
 def test_operation_name(ds):
-    query = dsl_gql(GetHeroName=DSLQuery(ds.Query.hero.select(ds.Character.name),))
+    query = dsl_gql(
+        GetHeroName=DSLQuery(
+            ds.Query.hero.select(ds.Character.name),
+        )
+    )
 
     assert (
         print_ast(query)

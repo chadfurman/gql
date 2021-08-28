@@ -1,7 +1,5 @@
 import logging
 from abc import ABC
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Tuple, Union, cast
-
 from graphql import (
     ArgumentNode,
     DocumentNode,
@@ -42,6 +40,7 @@ from graphql import (
 )
 from graphql.pyutils import FrozenList
 from graphql.utilities import ast_from_value as default_ast_from_value
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Tuple, Union, cast
 
 from .utils import to_camel_case
 
@@ -220,7 +219,9 @@ class DSLOperation(ABC):
     operation_type: OperationType
 
     def __init__(
-        self, *fields: "DSLField", **fields_with_alias: "DSLField",
+        self,
+        *fields: "DSLField",
+        **fields_with_alias: "DSLField",
     ):
         r"""Given arguments of type :class:`DSLField` containing GraphQL requests,
         generate an operation which can be converted to a Document
@@ -342,7 +343,9 @@ class DSLVariableDefinitions:
         """
         return [
             VariableDefinitionNode(
-                type=var.type, variable=var.ast_variable, default_value=None,
+                type=var.type,
+                variable=var.ast_variable,
+                default_value=None,
             )
             for var in self.variables.values()
             if var.type is not None  # only variables used

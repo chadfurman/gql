@@ -1,5 +1,4 @@
 import json
-
 from graphql import (
     GraphQLArgument,
     GraphQLField,
@@ -30,4 +29,7 @@ queryType = GraphQLObjectType(
     },
 )
 
-NestedInputSchema = GraphQLSchema(query=queryType, types=[nestedInput],)
+NestedInputSchema = GraphQLSchema(
+    query=queryType,
+    types=[nestedInput],
+)

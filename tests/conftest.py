@@ -1,16 +1,16 @@
+import ssl
+
 import asyncio
 import json
 import logging
 import os
 import pathlib
-import ssl
+import pytest
 import sys
 import tempfile
 import types
 from concurrent.futures import ThreadPoolExecutor
 from typing import Union
-
-import pytest
 
 from gql import Client
 

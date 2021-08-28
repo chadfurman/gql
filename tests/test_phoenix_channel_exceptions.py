@@ -1,5 +1,4 @@
 import asyncio
-
 import pytest
 
 from gql import Client, gql
@@ -360,8 +359,9 @@ def subscription_server(
     data_answers=default_subscription_data_answer,
     unsubscribe_answers=default_subscription_unsubscribe_answer,
 ):
-    from .conftest import PhoenixChannelServerHelper
     import json
+
+    from .conftest import PhoenixChannelServerHelper
 
     async def phoenix_server(ws, path):
         await PhoenixChannelServerHelper.send_connection_ack(ws)
@@ -434,7 +434,9 @@ server_error_server_answer = '{"event":"phx_error", "ref":2, "topic":"test_topic
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "server", [query_server(server_error_server_answer)], indirect=True,
+    "server",
+    [query_server(server_error_server_answer)],
+    indirect=True,
 )
 @pytest.mark.parametrize("query_str", [query1_str])
 async def test_phoenix_channel_server_error(event_loop, server, query_str):

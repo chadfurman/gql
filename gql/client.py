@@ -1,7 +1,5 @@
 import asyncio
 import warnings
-from typing import Any, AsyncGenerator, Dict, Generator, Optional, Union
-
 from graphql import (
     DocumentNode,
     ExecutionResult,
@@ -12,6 +10,7 @@ from graphql import (
     parse,
     validate,
 )
+from typing import Any, AsyncGenerator, Dict, Generator, Optional, Union
 
 from .transport.async_transport import AsyncTransport
 from .transport.exceptions import TransportQueryError

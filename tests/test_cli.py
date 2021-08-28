@@ -1,5 +1,4 @@
 import logging
-
 import pytest
 
 from gql.cli import get_execute_args, get_parser, get_transport, get_transport_args
@@ -149,7 +148,8 @@ def test_cli_parse_variable_value_invalid_param(parser, param):
 
 @pytest.mark.aiohttp
 @pytest.mark.parametrize(
-    "url", ["http://your_server.com", "https://your_server.com"],
+    "url",
+    ["http://your_server.com", "https://your_server.com"],
 )
 def test_cli_get_transport_aiohttp(parser, url):
 
@@ -164,7 +164,8 @@ def test_cli_get_transport_aiohttp(parser, url):
 
 @pytest.mark.websockets
 @pytest.mark.parametrize(
-    "url", ["ws://your_server.com", "wss://your_server.com"],
+    "url",
+    ["ws://your_server.com", "wss://your_server.com"],
 )
 def test_cli_get_transport_websockets(parser, url):
 

@@ -2,9 +2,8 @@ import json
 import logging
 import sys
 from argparse import ArgumentParser, Namespace, RawDescriptionHelpFormatter
-from typing import Any, Dict
-
 from graphql import GraphQLError
+from typing import Any, Dict
 from yarl import URL
 
 from gql import Client, __version__, gql

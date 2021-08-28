@@ -1,5 +1,4 @@
 import asyncio
-
 from graphql import (
     GraphQLArgument,
     GraphQLEnumType,
@@ -33,9 +32,18 @@ episodeEnum = GraphQLEnumType(
     "Episode",
     description="One of the films in the Star Wars Trilogy",
     values={
-        "NEWHOPE": GraphQLEnumValue(4, description="Released in 1977.",),
-        "EMPIRE": GraphQLEnumValue(5, description="Released in 1980.",),
-        "JEDI": GraphQLEnumValue(6, description="Released in 1983.",),
+        "NEWHOPE": GraphQLEnumValue(
+            4,
+            description="Released in 1977.",
+        ),
+        "EMPIRE": GraphQLEnumValue(
+            5,
+            description="Released in 1980.",
+        ),
+        "JEDI": GraphQLEnumValue(
+            6,
+            description="Released in 1983.",
+        ),
     },
 )
 
@@ -66,16 +74,21 @@ humanType = GraphQLObjectType(
     description="A humanoid creature in the Star Wars universe.",
     fields=lambda: {
         "id": GraphQLField(
-            GraphQLNonNull(GraphQLString), description="The id of the human.",
+            GraphQLNonNull(GraphQLString),
+            description="The id of the human.",
         ),
-        "name": GraphQLField(GraphQLString, description="The name of the human.",),
+        "name": GraphQLField(
+            GraphQLString,
+            description="The name of the human.",
+        ),
         "friends": GraphQLField(
             GraphQLList(characterInterface),
             description="The friends of the human, or an empty list if they have none.",
             resolve=lambda human, info, **args: getFriends(human),
         ),
         "appearsIn": GraphQLField(
-            GraphQLList(episodeEnum), description="Which movies they appear in.",
+            GraphQLList(episodeEnum),
+            description="Which movies they appear in.",
         ),
         "homePlanet": GraphQLField(
             GraphQLString,
@@ -90,19 +103,25 @@ droidType = GraphQLObjectType(
     description="A mechanical creature in the Star Wars universe.",
     fields=lambda: {
         "id": GraphQLField(
-            GraphQLNonNull(GraphQLString), description="The id of the droid.",
+            GraphQLNonNull(GraphQLString),
+            description="The id of the droid.",
         ),
-        "name": GraphQLField(GraphQLString, description="The name of the droid.",),
+        "name": GraphQLField(
+            GraphQLString,
+            description="The name of the droid.",
+        ),
         "friends": GraphQLField(
             GraphQLList(characterInterface),
             description="The friends of the droid, or an empty list if they have none.",
             resolve=lambda droid, info, **args: getFriends(droid),
         ),
         "appearsIn": GraphQLField(
-            GraphQLList(episodeEnum), description="Which movies they appear in.",
+            GraphQLList(episodeEnum),
+            description="Which movies they appear in.",
         ),
         "primaryFunction": GraphQLField(
-            GraphQLString, description="The primary function of the droid.",
+            GraphQLString,
+            description="The primary function of the droid.",
         ),
     },
     interfaces=[characterInterface],
@@ -152,7 +171,8 @@ queryType = GraphQLObjectType(
             humanType,
             args={
                 "id": GraphQLArgument(
-                    description="id of the human", type_=GraphQLNonNull(GraphQLString),
+                    description="id of the human",
+                    type_=GraphQLNonNull(GraphQLString),
                 )
             },
             resolve=lambda root, info, **args: getHuman(args["id"]),
@@ -161,7 +181,8 @@ queryType = GraphQLObjectType(
             droidType,
             args={
                 "id": GraphQLArgument(
-                    description="id of the droid", type_=GraphQLNonNull(GraphQLString),
+                    description="id of the droid",
+                    type_=GraphQLNonNull(GraphQLString),
                 )
             },
             resolve=lambda root, info, **args: getDroid(args["id"]),
@@ -191,7 +212,8 @@ mutationType = GraphQLObjectType(
                     type_=episodeEnum,  # type: ignore
                 ),
                 "review": GraphQLArgument(
-                    description="set alive status", type_=reviewInputType,
+                    description="set alive status",
+                    type_=reviewInputType,
                 ),
             },
             resolve=lambda root, info, **args: createReview(
@@ -219,7 +241,8 @@ subscriptionType = GraphQLObjectType(
             reviewType,
             args={
                 "episode": GraphQLArgument(
-                    description="Episode to review", type_=episodeEnum,
+                    description="Episode to review",
+                    type_=episodeEnum,
                 )
             },
             subscribe=subscribe_reviews,
